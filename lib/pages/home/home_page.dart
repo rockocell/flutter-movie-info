@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 20),
         children: [
-          //앱바 높이 구해서 넣기
+          SizedBox(height: AppBar().preferredSize.height),
           SizedBox(
             height: 50,
             child: Align(
@@ -34,6 +36,7 @@ class HomePage extends StatelessWidget {
           horizontalList(label: '인기순', itemBuilder: popularItemBuilder),
           horizontalList(label: '평점 높은순', itemBuilder: topRatedItemBuilder),
           horizontalList(label: '개봉예정', itemBuilder: upComingItemBuilder),
+          SizedBox(height: 50),
         ],
       ),
     );
