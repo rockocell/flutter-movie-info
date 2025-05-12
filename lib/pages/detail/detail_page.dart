@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:movie_info_app/pages/detail/widgets/detail_horizontal_list.dart';
+import 'package:movie_info_app/pages/detail/widgets/item_builders.dart';
 
 class DetailPage extends StatelessWidget {
   const DetailPage({super.key});
@@ -10,13 +12,16 @@ class DetailPage extends StatelessWidget {
         children: [
           AspectRatio(
             aspectRatio: 3 / 4,
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
-                  image: NetworkImage('https://picsum.photos/200/300'),
-                  fit: BoxFit.cover,
+            child: Hero(
+              tag: 'most-popular-image',
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                    image: NetworkImage('https://picsum.photos/200/300'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
@@ -48,7 +53,7 @@ class DetailPage extends StatelessWidget {
                 SizedBox(
                   height: 40,
                   width: double.infinity,
-                  child: horizontalList(
+                  child: DetailHorizontalList(
                     itemBuilder: categoryItemBuilder,
                     gapWidth: 8,
                   ),
@@ -71,7 +76,7 @@ class DetailPage extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 120,
-                  child: horizontalList(
+                  child: DetailHorizontalList(
                     itemBuilder: boxOfficeItemBuilder,
                     gapWidth: 12,
                   ),
@@ -80,7 +85,7 @@ class DetailPage extends StatelessWidget {
                 SizedBox(
                   height: 80,
                   width: double.infinity,
-                  child: horizontalList(
+                  child: DetailHorizontalList(
                     itemBuilder: (context, index) {
                       return AspectRatio(
                         aspectRatio: 9 / 5,
@@ -97,59 +102,4 @@ class DetailPage extends StatelessWidget {
       ),
     );
   }
-
-  ListView horizontalList({
-    required Widget Function(BuildContext context, int index) itemBuilder,
-    required double gapWidth,
-  }) {
-    return ListView.separated(
-      separatorBuilder: (context, index) {
-        return SizedBox(width: gapWidth);
-      },
-      scrollDirection: Axis.horizontal,
-      itemCount: 6,
-
-      itemBuilder: (context, index) => itemBuilder(context, index),
-    );
-  }
-}
-
-Widget categoryItemBuilder(BuildContext context, int index) {
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 12),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(50),
-      color: Colors.transparent,
-      border: Border.all(color: Colors.white, width: 1),
-    ),
-    child: Align(
-      alignment: Alignment.center,
-      child: Text(
-        'Adventure',
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          color: Colors.blue,
-        ),
-      ),
-    ),
-  );
-}
-
-Widget boxOfficeItemBuilder(BuildContext context, int index) {
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 15),
-    decoration: BoxDecoration(
-      border: Border.all(color: Colors.white),
-      borderRadius: BorderRadius.circular(15),
-    ),
-    child: Column(
-      children: [
-        Spacer(),
-        Text('6.949', style: TextStyle(fontSize: 16)),
-        Text('평점', style: TextStyle(fontSize: 16)),
-        Spacer(),
-      ],
-    ),
-  );
 }
