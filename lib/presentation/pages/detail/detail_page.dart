@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movie_info_app/pages/detail/widgets/detail_horizontal_list.dart';
-import 'package:movie_info_app/pages/detail/widgets/item_builders.dart';
+import 'package:movie_info_app/presentation/pages/detail/widgets/detail_horizontal_list.dart';
+import 'package:movie_info_app/presentation/pages/detail/widgets/item_builders.dart';
 
 class DetailPage extends StatelessWidget {
   const DetailPage({super.key});
