@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movie_info_app/pages/detail/detail_page.dart';
-import 'package:movie_info_app/pages/home/widgets/home_horizontal_list.dart';
-import 'package:movie_info_app/pages/home/widgets/item_builders.dart';
+import 'package:movie_info_app/presentation/pages/detail/detail_page.dart';
+import 'package:movie_info_app/presentation/pages/home/widgets/home_horizontal_list.dart';
+import 'package:movie_info_app/presentation/pages/home/widgets/item_builders.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_info_app/pages/detail/detail_page.dart';
+import 'package:movie_info_app/presentation/pages/detail/detail_page.dart';
 
 // 현재 상영중
 Widget nowPlayingItemBuilder(BuildContext context, int index) {
