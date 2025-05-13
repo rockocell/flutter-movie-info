@@ -173,10 +173,10 @@ class ProductionCountry {
   ProductionCountry({required this.iso31661, required this.name});
 
   ProductionCountry.fromJson(Map<String, dynamic> map)
-    : this(iso31661: map['iso31661'], name: map['name']);
+    : this(iso31661: map['iso_3166_1'], name: map['name']);
 
   Map<String, dynamic> toJson() {
-    return {'iso31661': iso31661, 'name': name};
+    return {'iso_3166_1': iso31661, 'name': name};
   }
 }
 
@@ -194,10 +194,10 @@ class SpokenLanguage {
   SpokenLanguage.fromJson(Map<String, dynamic> map)
     : this(
         englishName: map['english_name'],
-        iso6391: map['iso6391'],
+        iso6391: map['iso_639_1'],
         name: map['name'],
       );
   Map<String, dynamic> toJson() {
-    return {'english_name': englishName, 'iso6391': iso6391, 'name': name};
+    return {'english_name': englishName, 'iso_639_1': iso6391, 'name': name};
   }
 }
