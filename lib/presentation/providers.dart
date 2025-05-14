@@ -49,6 +49,7 @@ final fetchMovieDetailUsecaseProvider = Provider((ref) {
 // FetchMovieDetailUsecase가 excute될 때 필요한 int id를 제공하는 Provider
 // 초기에는 null 값만 있음
 // 사용자 입력에 따라 값 업데이트
-final movieIdProvider = Provider((ref) {
-  return null;
+final movieIdProvider = StateProvider((ref) {
+  final movieId = null;
+  return movieId;
 });

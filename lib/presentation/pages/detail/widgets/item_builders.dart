@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:movie_info_app/domain/entity/movie_detail.dart';
 
-Widget categoryItemBuilder(BuildContext context, int index) {
+Widget categoryItemBuilder(BuildContext context, int index, MovieDetail movie) {
   return Container(
     padding: EdgeInsets.symmetric(horizontal: 12),
     decoration: BoxDecoration(
@@ -11,31 +12,13 @@ Widget categoryItemBuilder(BuildContext context, int index) {
     child: Align(
       alignment: Alignment.center,
       child: Text(
-        'Adventure',
+        movie.genres[index],
         style: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.bold,
           color: Colors.blue,
         ),
       ),
-    ),
-  );
-}
-
-Widget boxOfficeItemBuilder(BuildContext context, int index) {
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 15),
-    decoration: BoxDecoration(
-      border: Border.all(color: Colors.white),
-      borderRadius: BorderRadius.circular(15),
-    ),
-    child: Column(
-      children: [
-        Spacer(),
-        Text('6.949', style: TextStyle(fontSize: 16)),
-        Text('평점', style: TextStyle(fontSize: 16)),
-        Spacer(),
-      ],
     ),
   );
 }

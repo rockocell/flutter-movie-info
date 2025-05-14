@@ -5,16 +5,17 @@ import 'package:movie_info_app/presentation/providers.dart';
 class DetailViewModel extends Notifier<MovieDetail?> {
   @override
   MovieDetail? build() {
-    fetchMovieDetail();
     return null;
   }
 
-  Future<void> fetchMovieDetail() async {
-    final fetchMovieDetailUsecase = ref.read(fetchMovieDetailUsecaseProvider);
-
-    final id = ref.read(movieIdProvider);
-    if (id == null) return; // id가 null 인 경우 처리
-    final result = await fetchMovieDetailUsecase.execute(id);
+  Future<void> fetchMovieDetail(int id) async {
+    final result = await ref.read(fetchMovieDetailUsecaseProvider).execute(id);
     state = result;
   }
 }
+
+final detailViewModelProvider = NotifierProvider<DetailViewModel, MovieDetail?>(
+  () {
+    return DetailViewModel();
+  },
+);
