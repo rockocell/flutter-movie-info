@@ -39,7 +39,12 @@ class HomeViewModel extends Notifier<HomeState> {
     fetchPopularMovies();
     fetchTopRatedMovies();
     fetchUpcomingMovies();
-    return const HomeState();
+    return const HomeState(
+      nowPlaying: [],
+      popular: [],
+      topRated: [],
+      upcoming: [],
+    );
   }
 
   Future<void> fetchNowPlayingMovies() async {
