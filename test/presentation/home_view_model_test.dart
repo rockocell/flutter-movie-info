@@ -50,16 +50,19 @@ void main() {
       );
       // 실행 전 상태 확인
       final stateBefore = providerContainer.read(homeViewModelProvider);
-      expect(stateBefore!.length, 0);
+      expect(stateBefore.nowPlaying, isNull);
       // 실행
       await providerContainer
           .read(homeViewModelProvider.notifier)
           .fetchNowPlayingMovies();
       // 실행 후 상태 확인
       final stateAfter = providerContainer.read(homeViewModelProvider);
-      expect(stateAfter!.isEmpty, false);
-      expect(stateAfter.length, 1);
-      expect(stateAfter.first.id, 123);
+      expect(stateAfter.nowPlaying, isNotNull);
+      expect(stateAfter.popular, isNull);
+      expect(stateAfter.topRated, isNull);
+      expect(stateAfter.upcoming, isNull);
+      expect(stateAfter.nowPlaying!.length, 1);
+      expect(stateAfter.nowPlaying!.first.id, 123);
 
       addTearDown(providerContainer.dispose);
     },
@@ -80,16 +83,18 @@ void main() {
     );
     // 실행 전 상태 확인
     final stateBefore = providerContainer.read(homeViewModelProvider);
-    expect(stateBefore!.length, 0);
+    expect(stateBefore.popular, isNull);
     // 실행
     await providerContainer
         .read(homeViewModelProvider.notifier)
         .fetchPopularMovies();
     // 실행 후 상태 확인
     final stateAfter = providerContainer.read(homeViewModelProvider);
-    expect(stateAfter!.isEmpty, false);
-    expect(stateAfter.length, 1);
-    expect(stateAfter.first.id, 123);
+    expect(stateAfter.popular, isNotNull);
+    expect(stateAfter.nowPlaying, isNull);
+    expect(stateAfter.topRated, isNull);
+    expect(stateAfter.upcoming, isNull);
+    expect(stateAfter.popular!.first.id, 123);
 
     addTearDown(providerContainer.dispose);
   });
@@ -109,16 +114,18 @@ void main() {
     );
     // 실행 전 상태 확인
     final stateBefore = providerContainer.read(homeViewModelProvider);
-    expect(stateBefore!.length, 0);
+    expect(stateBefore.topRated, isNull);
     // 실행
     await providerContainer
         .read(homeViewModelProvider.notifier)
         .fetchTopRatedMovies();
     // 실행 후 상태 확인
     final stateAfter = providerContainer.read(homeViewModelProvider);
-    expect(stateAfter!.isEmpty, false);
-    expect(stateAfter.length, 1);
-    expect(stateAfter.first.id, 123);
+    expect(stateAfter.topRated, isNotNull);
+    expect(stateAfter.nowPlaying, isNull);
+    expect(stateAfter.popular, isNull);
+    expect(stateAfter.upcoming, isNull);
+    expect(stateAfter.topRated!.first.id, 123);
 
     addTearDown(providerContainer.dispose);
   });
@@ -138,16 +145,18 @@ void main() {
     );
     // 실행 전 상태 확인
     final stateBefore = providerContainer.read(homeViewModelProvider);
-    expect(stateBefore!.length, 0);
+    expect(stateBefore.upcoming, isNull);
     // 실행
     await providerContainer
         .read(homeViewModelProvider.notifier)
         .fetchUpcomingMovies();
     // 실행 후 상태 확인
     final stateAfter = providerContainer.read(homeViewModelProvider);
-    expect(stateAfter!.isEmpty, false);
-    expect(stateAfter.length, 1);
-    expect(stateAfter.first.id, 123);
+    expect(stateAfter.upcoming, isNotNull);
+    expect(stateAfter.nowPlaying, isNull);
+    expect(stateAfter.popular, isNull);
+    expect(stateAfter.topRated, isNull);
+    expect(stateAfter.upcoming!.first.id, 123);
 
     addTearDown(providerContainer.dispose);
   });

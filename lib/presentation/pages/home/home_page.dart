@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_info_app/presentation/pages/detail/detail_page.dart';
+import 'package:movie_info_app/presentation/pages/home/home_view_model.dart';
 import 'package:movie_info_app/presentation/pages/home/widgets/home_horizontal_list.dart';
 import 'package:movie_info_app/presentation/pages/home/widgets/item_builders.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final moviesProvider = ref.watch(homeViewModelProvider);
+
     return Scaffold(
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 20),
