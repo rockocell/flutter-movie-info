@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:movie_info_app/domain/entity/movie.dart';
 
 class HomeHorizontalList extends StatelessWidget {
   const HomeHorizontalList({
     super.key,
     required this.label,
     required this.itemBuilder,
+    required this.items,
   });
 
   final String label;
-  final Widget Function(BuildContext context, int index) itemBuilder;
+  final Widget Function(BuildContext context, Movie movie, int index)
+  itemBuilder;
+  final List<Movie> items;
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +34,12 @@ class HomeHorizontalList extends StatelessWidget {
           width: double.infinity,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) => itemBuilder(context, index),
+            itemCount: items.length,
+            itemBuilder:
+                (context, index) => itemBuilder(context, items[index], index),
             separatorBuilder: (context, index) {
               return SizedBox(width: 10);
             },
-            itemCount: 20,
           ),
         ),
       ],
