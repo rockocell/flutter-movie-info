@@ -5,7 +5,6 @@ import 'package:movie_info_app/presentation/pages/detail/detail_page.dart';
 import 'package:movie_info_app/presentation/pages/home/home_view_model.dart';
 import 'package:movie_info_app/presentation/pages/home/widgets/home_horizontal_list.dart';
 import 'package:movie_info_app/presentation/pages/home/widgets/item_builders.dart';
-import 'package:movie_info_app/presentation/providers.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -18,21 +17,21 @@ class HomePage extends ConsumerWidget {
     final popular = homeState.popular!;
     final topRated = homeState.topRated!;
     final upcoming = homeState.upcoming!;
-    final mostPopular = popular.first;
 
     // 로딩중 확인
     final isLoading =
         homeState.nowPlaying == null ||
         homeState.popular == null ||
         homeState.topRated == null ||
-        homeState.upcoming == null;
+        homeState.upcoming == null ||
+        homeState.popular!.isEmpty;
 
     if (isLoading) {
-      return const Scaffold(
-        backgroundColor: Colors.black,
-        body: SizedBox.expand(),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
+
+    final mostPopular = popular.first;
+
     return Scaffold(
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 20),
@@ -50,7 +49,6 @@ class HomePage extends ConsumerWidget {
           ),
           GestureDetector(
             onTap: () {
-              ref.read(movieIdProvider.notifier).state = mostPopular.id;
               Navigator.push(
                 context,
                 MaterialPageRoute(

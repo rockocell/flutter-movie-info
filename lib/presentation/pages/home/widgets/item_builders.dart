@@ -11,7 +11,6 @@ Widget nowPlayingItemBuilder(BuildContext context, Movie movie, int index) {
     builder: (BuildContext context, WidgetRef ref, Widget? child) {
       return GestureDetector(
         onTap: () {
-          ref.read(movieIdProvider.notifier).state = movie.id;
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -48,7 +47,6 @@ Widget popularItemBuilder(BuildContext context, Movie movie, int index) {
     builder: (BuildContext context, WidgetRef ref, Widget? child) {
       return GestureDetector(
         onTap: () {
-          ref.read(movieIdProvider.notifier).state = movie.id;
           Navigator.push(
             context,
             MaterialPageRoute(
