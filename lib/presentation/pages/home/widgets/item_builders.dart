@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:movie_info_app/core/util.dart';
+import 'package:movie_info_app/domain/entity/movie.dart';
 import 'package:movie_info_app/presentation/pages/detail/detail_page.dart';
 
 // 현재 상영중
-Widget nowPlayingItemBuilder(BuildContext context, int index) {
+Widget nowPlayingItemBuilder(BuildContext context, Movie movie, int index) {
   return GestureDetector(
     onTap: () {
       Navigator.push(
@@ -15,11 +17,11 @@ Widget nowPlayingItemBuilder(BuildContext context, int index) {
       );
     },
     child: Container(
-      width: 135,
+      width: 120,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
-          image: NetworkImage('http://picsum.photos/200/300'),
+          image: NetworkImage(getImageUrl(movie.posterPath)),
           fit: BoxFit.cover,
         ),
       ),
@@ -28,7 +30,7 @@ Widget nowPlayingItemBuilder(BuildContext context, int index) {
 }
 
 // 인기순
-Widget popularItemBuilder(BuildContext context, int index) {
+Widget popularItemBuilder(BuildContext context, Movie movie, int index) {
   return GestureDetector(
     onTap: () {
       Navigator.push(
@@ -42,18 +44,18 @@ Widget popularItemBuilder(BuildContext context, int index) {
     },
     child: SizedBox(
       height: 180,
-      width: 160,
+      width: 145,
       child: Stack(
         children: [
           Positioned(
             left: 25,
             child: Container(
               height: 180,
-              width: 135,
+              width: 120,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
-                  image: NetworkImage('http://picsum.photos/200/300'),
+                  image: NetworkImage(getImageUrl(movie.posterPath)),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -78,7 +80,7 @@ Widget popularItemBuilder(BuildContext context, int index) {
 }
 
 // 평점 높은순
-Widget topRatedItemBuilder(BuildContext context, int index) {
+Widget topRatedItemBuilder(BuildContext context, Movie movie, int index) {
   return GestureDetector(
     onTap: () {
       Navigator.push(
@@ -91,11 +93,11 @@ Widget topRatedItemBuilder(BuildContext context, int index) {
       );
     },
     child: Container(
-      width: 135,
+      width: 120,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
-          image: NetworkImage('http://picsum.photos/200/300'),
+          image: NetworkImage(getImageUrl(movie.posterPath)),
           fit: BoxFit.cover,
         ),
       ),
@@ -104,7 +106,7 @@ Widget topRatedItemBuilder(BuildContext context, int index) {
 }
 
 // 개봉예정
-Widget upcomingItemBuilder(BuildContext context, int index) {
+Widget upcomingItemBuilder(BuildContext context, Movie movie, int index) {
   return GestureDetector(
     onTap: () {
       Navigator.push(
@@ -117,11 +119,11 @@ Widget upcomingItemBuilder(BuildContext context, int index) {
       );
     },
     child: Container(
-      width: 135,
+      width: 120,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
-          image: NetworkImage('http://picsum.photos/200/300'),
+          image: NetworkImage(getImageUrl(movie.posterPath)),
           fit: BoxFit.cover,
         ),
       ),

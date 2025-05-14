@@ -35,6 +35,10 @@ class HomeState {
 class HomeViewModel extends Notifier<HomeState> {
   @override
   HomeState build() {
+    fetchNowPlayingMovies();
+    fetchPopularMovies();
+    fetchTopRatedMovies();
+    fetchUpcomingMovies();
     return const HomeState();
   }
 
