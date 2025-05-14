@@ -57,7 +57,7 @@ class MovieDetailDto {
     : this(
         adult: map['adult'],
         backdropPath: map['backdrop_path'],
-        belongsToCollection: map['belongs_to_collection'] as String?,
+        belongsToCollection: map['belongs_to_collection']?['name'],
         budget: map['budget'],
         genres: (map['genres'] as List).map((e) => Genre.fromJson(e)).toList(),
         homepage: map['homepage'],

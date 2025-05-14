@@ -34,6 +34,15 @@ class _DetailPageState extends ConsumerState<DetailPage> {
   Widget build(BuildContext context) {
     final movieDetail = ref.watch(detailViewModelProvider);
 
+    final isLoading = movieDetail == null;
+
+    if (isLoading) {
+      return const Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
       body: ListView(
         children: [
@@ -62,17 +71,25 @@ class _DetailPageState extends ConsumerState<DetailPage> {
                   height: 50,
                   child: Row(
                     children: [
-                      Text(
-                        movieDetail!.title,
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width - 140,
+                        child: Text(
+                          movieDetail.title,
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       Spacer(),
-                      Text(
-                        movieDetail.releaseDate,
-                        style: TextStyle(fontSize: 14),
+                      SizedBox(
+                        width: 100,
+                        child: Text(
+                          movieDetail.releaseDate,
+                          style: TextStyle(fontSize: 14),
+                          textAlign: TextAlign.end,
+                        ),
                       ),
                     ],
                   ),
@@ -144,6 +161,11 @@ class _DetailPageState extends ConsumerState<DetailPage> {
                   width: double.infinity,
                   child: DetailHorizontalList(
                     itemBuilder: (context, index, moviedetail) {
+                      final logoPath =
+                          moviedetail.productionCompanyLogos[index];
+                      if (logoPath == null) {
+                        return const SizedBox.shrink();
+                      }
                       return Container(
                         width: 170,
                         decoration: BoxDecoration(color: Colors.white),
@@ -152,11 +174,7 @@ class _DetailPageState extends ConsumerState<DetailPage> {
                           child: Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: NetworkImage(
-                                  getImageUrl(
-                                    moviedetail.productionCompanyLogos[index]!,
-                                  ),
-                                ),
+                                image: NetworkImage(getImageUrl(logoPath)),
                                 fit: BoxFit.scaleDown,
                               ),
                             ),
