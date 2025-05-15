@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_info_app/core/util.dart';
 import 'package:movie_info_app/domain/entity/movie.dart';
 import 'package:movie_info_app/presentation/pages/detail/detail_page.dart';
-import 'package:movie_info_app/presentation/providers.dart';
 
 // 현재 상영중
 Widget nowPlayingItemBuilder(BuildContext context, Movie movie, int index) {

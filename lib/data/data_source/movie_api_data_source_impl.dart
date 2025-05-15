@@ -82,7 +82,6 @@ class MovieApiDataSourceImpl implements MovieDataSource {
     try {
       final response = await dio.get('https://api.themoviedb.org/3/movie/$id');
 
-      print('📦 movie detail raw response: ${response.data}');
       final map = jsonDecode(response.toString());
       final MovieDetailDto movieDetail = MovieDetailDto.fromJson(map);
       return movieDetail;
