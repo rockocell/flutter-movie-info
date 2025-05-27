@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:movie_info_app/data/data_source/movie_data_source.dart';
 import 'package:movie_info_app/domain/entity/movie.dart';
 import 'package:movie_info_app/domain/entity/movie_detail.dart';
@@ -16,7 +18,7 @@ class MovieRepositoryImpl implements MovieRepository {
           .map((e) => Movie(id: e.id, posterPath: e.posterPath))
           .toList();
     } catch (e) {
-      print('Repository : Error occurred fetchNowPlayingMovies : $e');
+      log('Repository : Error occurred fetchNowPlayingMovies : $e');
       return null;
     }
   }
@@ -30,7 +32,7 @@ class MovieRepositoryImpl implements MovieRepository {
           .map((e) => Movie(id: e.id, posterPath: e.posterPath))
           .toList();
     } catch (e) {
-      print('Repository : Error occurred fetchPopularMovies : $e');
+      log('Repository : Error occurred fetchPopularMovies : $e');
       return null;
     }
   }
@@ -44,7 +46,7 @@ class MovieRepositoryImpl implements MovieRepository {
           .map((e) => Movie(id: e.id, posterPath: e.posterPath))
           .toList();
     } catch (e) {
-      print('Repository : Error occurred fetchTopRatedMovies : $e');
+      log('Repository : Error occurred fetchTopRatedMovies : $e');
       return null;
     }
   }
@@ -58,7 +60,7 @@ class MovieRepositoryImpl implements MovieRepository {
           .map((e) => Movie(id: e.id, posterPath: e.posterPath))
           .toList();
     } catch (e) {
-      print('Repository : Error occurred fetchUpcomingMovies : $e');
+      log('Repository : Error occurred fetchUpcomingMovies : $e');
       return null;
     }
   }
@@ -91,8 +93,16 @@ class MovieRepositoryImpl implements MovieRepository {
         voteCount: result.voteCount,
       );
     } catch (e) {
-      print('Repository : Error occurred fetchMovieDetail : $e');
+      log('Repository : Error occurred fetchMovieDetail : $e');
       return null;
     }
+  }
+
+  @override
+  Future<List<Movie>> fetchPopulars() async {
+    final results = await _movieDataSource.fetchPopulars();
+    return results
+        .map((e) => Movie(id: e.id, posterPath: e.posterPath))
+        .toList();
   }
 }

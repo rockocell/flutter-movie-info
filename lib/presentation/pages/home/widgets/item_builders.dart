@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_info_app/core/util.dart';
 import 'package:movie_info_app/domain/entity/movie.dart';
 import 'package:movie_info_app/presentation/pages/detail/detail_page.dart';
+import 'package:movie_info_app/presentation/pages/home/home_view_model.dart';
 
 // 현재 상영중
 Widget nowPlayingItemBuilder(BuildContext context, Movie movie, int index) {
@@ -44,42 +45,73 @@ Widget nowPlayingItemBuilder(BuildContext context, Movie movie, int index) {
 Widget popularItemBuilder(BuildContext context, Movie movie, int index) {
   return Consumer(
     builder: (BuildContext context, WidgetRef ref, Widget? child) {
+      final popularsAsync = ref.watch(popularsProvider);
       return GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return DetailPage(
-                  movieId: movie.id,
-                  posterPath: movie.posterPath,
-                  heroTag: 'popular-${movie.posterPath}',
-                );
-              },
-            ),
-          );
+          if (popularsAsync.hasValue) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return DetailPage(
+                    movieId: movie.id,
+                    posterPath: movie.posterPath,
+                    heroTag: 'popular-${movie.posterPath}',
+                  );
+                },
+              ),
+            );
+          }
         },
         child: SizedBox(
           height: 180,
           width: 145,
           child: Stack(
             children: [
-              Positioned(
-                left: 25,
-                child: Hero(
-                  tag: 'popular-${movie.posterPath}',
-                  child: Container(
-                    height: 180,
-                    width: 120,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: NetworkImage(getImageUrl(movie.posterPath)),
-                        fit: BoxFit.cover,
+              popularsAsync.when(
+                loading: () {
+                  return Positioned(
+                    left: 25,
+                    child: Container(
+                      height: 180,
+                      width: 120,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.grey,
+                      ),
+                      child: Center(child: CircularProgressIndicator()),
+                    ),
+                  );
+                },
+                error: (error, stackTrace) {
+                  return Positioned(
+                    left: 25,
+                    child: Container(
+                      height: 180,
+                      width: 120,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.grey,
                       ),
                     ),
-                  ),
-                ),
+                  );
+                },
+                data: (data) {
+                  return Positioned(
+                    left: 25,
+                    child: Container(
+                      height: 180,
+                      width: 120,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: NetworkImage(getImageUrl(movie.posterPath)),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
               Positioned(
                 bottom: -20,

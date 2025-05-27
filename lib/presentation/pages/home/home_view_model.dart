@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_info_app/domain/entity/movie.dart';
 import 'package:movie_info_app/presentation/providers.dart';
@@ -72,3 +74,31 @@ class HomeViewModel extends Notifier<HomeState> {
 final homeViewModelProvider = NotifierProvider<HomeViewModel, HomeState>(() {
   return HomeViewModel();
 });
+
+///
+///
+///
+///
+class PopularsProvider extends AutoDisposeAsyncNotifier<List<Movie>> {
+  @override
+  Future<List<Movie>> build() async {
+    return await fetchPopulars();
+  }
+
+  Future<List<Movie>> fetchPopulars() async {
+    try {
+      final popularMovies =
+          await ref.read(fetchPopularsUsecaseProvider).execute();
+      state = AsyncValue.data(popularMovies);
+      return popularMovies;
+    } catch (e, st) {
+      state = AsyncError(e, st);
+      return [];
+    }
+  }
+}
+
+final popularsProvider =
+    AutoDisposeAsyncNotifierProvider<PopularsProvider, List<Movie>>(
+      () => PopularsProvider(),
+    );

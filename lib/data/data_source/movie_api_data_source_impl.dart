@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:movie_info_app/data/data_source/movie_data_source.dart';
@@ -21,7 +22,7 @@ class MovieApiDataSourceImpl implements MovieDataSource {
               .toList();
       return nowPlayingMovies;
     } catch (e) {
-      print('Error occurred during fetching now playing movies: $e');
+      log('Error occurred during fetching now playing movies: $e');
       return null;
     }
   }
@@ -38,7 +39,7 @@ class MovieApiDataSourceImpl implements MovieDataSource {
               .toList();
       return popularMovies;
     } catch (e) {
-      print('Error occurred during fetching popular movies: $e');
+      log('Error occurred during fetching popular movies: $e');
       return null;
     }
   }
@@ -55,7 +56,7 @@ class MovieApiDataSourceImpl implements MovieDataSource {
               .toList();
       return topRatedMovies;
     } catch (e) {
-      print('Error occurred during fetching top rated movies: $e');
+      log('Error occurred during fetching top rated movies: $e');
       return null;
     }
   }
@@ -72,7 +73,7 @@ class MovieApiDataSourceImpl implements MovieDataSource {
               .toList();
       return upcomingMovies;
     } catch (e) {
-      print('Error occurred during fetching upcoming movies: $e');
+      log('Error occurred during fetching upcoming movies: $e');
       return null;
     }
   }
@@ -86,8 +87,20 @@ class MovieApiDataSourceImpl implements MovieDataSource {
       final MovieDetailDto movieDetail = MovieDetailDto.fromJson(map);
       return movieDetail;
     } catch (e) {
-      print('Error occurred during fetching upcoming movies: $e');
+      log('Error occurred during fetching upcoming movies: $e');
       return null;
     }
+  }
+
+  @override
+  Future<List<MovieResponseDto>> fetchPopulars() async {
+    final response = await dio.get(
+      'https://api.themoviedb.org/3/movie/popular',
+    );
+    final List<MovieResponseDto> popularMovies =
+        (response.data['results'] as List)
+            .map((e) => MovieResponseDto.fromJson(e))
+            .toList();
+    return popularMovies;
   }
 }

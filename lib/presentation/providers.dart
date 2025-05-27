@@ -6,6 +6,7 @@ import 'package:movie_info_app/domain/repository/movie_repository.dart';
 import 'package:movie_info_app/domain/usecase/fetch_movie_detail_usecase.dart';
 import 'package:movie_info_app/domain/usecase/fetch_now_playing_movies_usecase.dart';
 import 'package:movie_info_app/domain/usecase/fetch_popular_movies_usecase.dart';
+import 'package:movie_info_app/domain/usecase/fetch_populars_usecase.dart';
 import 'package:movie_info_app/domain/usecase/fetch_top_rated_movies_usecase.dart';
 import 'package:movie_info_app/domain/usecase/fetch_upcoming_movies_usecase.dart';
 import 'package:movie_info_app/network/dio_client.dart';
@@ -20,6 +21,8 @@ final _movieRepositoryProvider = Provider<MovieRepository>((ref) {
 });
 
 /// 이하 usecase Provider
+///
+///
 ///
 final fetchNowPlayingMoviesUsecaseProvider = Provider((ref) {
   final movieRepo = ref.read(_movieRepositoryProvider);
@@ -44,4 +47,9 @@ final fetchUpcomingMoviesUsecaseProvider = Provider((ref) {
 final fetchMovieDetailUsecaseProvider = Provider((ref) {
   final movieRepo = ref.read(_movieRepositoryProvider);
   return FetchMovieDetailUsecase(movieRepo);
+});
+
+final fetchPopularsUsecaseProvider = Provider((ref) {
+  final movieRepo = ref.read(_movieRepositoryProvider);
+  return FetchPopularsUsecase(movieRepo);
 });
