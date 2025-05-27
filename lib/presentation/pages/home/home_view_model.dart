@@ -1,6 +1,10 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_info_app/core/util.dart';
 import 'package:movie_info_app/domain/entity/movie.dart';
 import 'package:movie_info_app/presentation/providers.dart';
 
@@ -96,9 +100,23 @@ class PopularsProvider extends AutoDisposeAsyncNotifier<List<Movie>> {
       return [];
     }
   }
+
+  List<ImageProvider> getCachedImageProviders(List<Movie> movies) {
+    final imageUrls = movies.map((e) => getImageUrl(e.posterPath)).toList();
+    log('$imageUrls');
+    final imageProviders =
+        imageUrls.map((e) => CachedNetworkImageProvider(e)).toList();
+    log('${imageProviders.length}');
+    return imageProviders;
+  }
 }
 
 final popularsProvider =
     AutoDisposeAsyncNotifierProvider<PopularsProvider, List<Movie>>(
       () => PopularsProvider(),
     );
+
+///
+///
+///
+///

@@ -3,33 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_info_app/core/util.dart';
 import 'package:movie_info_app/presentation/pages/detail/detail_page.dart';
 import 'package:movie_info_app/presentation/pages/home/home_view_model.dart';
-import 'package:movie_info_app/presentation/pages/home/widgets/home_horizontal_list.dart';
-import 'package:movie_info_app/presentation/pages/home/widgets/item_builders.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final homeState = ref.watch(homeViewModelProvider);
-    // final nowPlaying = homeState.nowPlaying!;
-    // final popular = homeState.popular!;
-    // final topRated = homeState.topRated!;
-    // final upcoming = homeState.upcoming!;
-
-    // 로딩중 확인
-    // final isLoading =
-    //     homeState.nowPlaying == null ||
-    //     homeState.popular == null ||
-    //     homeState.topRated == null ||
-    //     homeState.upcoming == null ||
-    //     homeState.popular!.isEmpty;
-
-    // if (isLoading) {
-    //   return const Scaffold(body: Center(child: CircularProgressIndicator()));
-    // }
-
-    // final mostPopular = popular.first;
     final popularsAsync = ref.watch(popularsProvider);
     return Scaffold(
       body: ListView(
@@ -146,6 +125,9 @@ class HomePage extends ConsumerWidget {
                                 error: (error, stackTrace) => Text(''),
                                 data: (data) {
                                   final movie = data[index];
+                                  final images = ref
+                                      .read(popularsProvider.notifier)
+                                      .getCachedImageProviders(data);
                                   return GestureDetector(
                                     onTap: () {
                                       Navigator.push(
@@ -162,17 +144,36 @@ class HomePage extends ConsumerWidget {
                                         ),
                                       );
                                     },
-                                    child: Container(
-                                      height: 180,
-                                      width: 120,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        image: DecorationImage(
-                                          image: NetworkImage(
-                                            getImageUrl(movie.posterPath),
+                                    child: Hero(
+                                      tag: 'popular-${movie.posterPath}',
+                                      child: Container(
+                                        height: 180,
+                                        width: 120,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
                                           ),
-                                          fit: BoxFit.cover,
+                                          // 기존코드
+                                          // image:DecorationImage(
+                                          //   image: NetworkImage(
+                                          //     getImageUrl(movie.posterPath),
+                                          //   ),
+                                          //   fit: BoxFit.cover,
+                                          // ),
+                                          //
+                                          // 시도한 코드 1
+                                          image: DecorationImage(
+                                            image: images[index],
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
+                                        // 시도한 코드 2
+                                        // child: Image(
+                                        //   image: images[index],
+                                        //   fit: BoxFit.cover,
+                                        //   height: 180,
+                                        //   width: 120,
+                                        // ),
                                       ),
                                     ),
                                   );
